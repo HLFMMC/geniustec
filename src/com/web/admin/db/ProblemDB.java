@@ -16,7 +16,7 @@ public class ProblemDB {
 	}
 
 	/**
-	 * 文章列表
+	 * 问题列表
 	 * @param articleId
 	 * @param text
 	 * @return
@@ -126,7 +126,7 @@ public class ProblemDB {
 	 * @return
 	 * @throws Exception
 	 */
-	public int ProblemClose(String replyId,String problemId) throws Exception {
+	public int ProblemAdoption(String replayId,String problemId) throws Exception {
 		StringBuffer sql = new StringBuffer();
 		sql.append(" UPDATE  ");
 		sql.append("   db_design.problembase  ");
@@ -137,14 +137,14 @@ public class ProblemDB {
 		sql.append("   db_design.problembase.ID = ?  ");
 
 
-		sqlClient.addParameter(replyId);
+		sqlClient.addParameter(replayId);
 		sqlClient.addParameter(problemId);
 		
 		return sqlClient.execUpdate(sql.toString());
 	}
 	
 	// 采纳问题 最佳用户添加积分
-	public int UserAddSorce(String replyId,String problemId) throws Exception {
+	public int UserAddSorce(String replayId,String problemId) throws Exception {
 		StringBuffer sql = new StringBuffer();
 		sql.append(" UPDATE  ");
 		sql.append("   db_design.userbase  ");
@@ -169,12 +169,29 @@ public class ProblemDB {
 		sql.append("     db_design.problemreply.ID = ?  ");
 		sql.append("   ) ");
 		sqlClient.addParameter(problemId);
-		sqlClient.addParameter(replyId);
+		sqlClient.addParameter(replayId);
 		
 		return sqlClient.execUpdate(sql.toString());
 	}
-	
-	
+	/**
+	 * 关闭问题
+	 * @param replayId
+	 * @param problemId
+	 * @return
+	 * @throws Exception
+	 */
+	public int ProblemClose(String problemId) throws Exception {
+		StringBuffer sql = new StringBuffer();
+		sql.append(" UPDATE  ");
+		sql.append("   db_design.problembase  ");
+		sql.append(" SET  ");
+		sql.append("   db_design.problembase.IsClose = 2 ");
+		sql.append(" WHERE  ");
+		sql.append("   db_design.problembase.ID = ?  ");
+		sqlClient.addParameter(problemId);
+		
+		return sqlClient.execUpdate(sql.toString());
+	}
 	/**
 	 * 回复列表
 	 * @param articleId

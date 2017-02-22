@@ -228,6 +228,22 @@ ul>li {
 		}
 		showAction(jsonData);
 	}
+	/*采纳问题*/
+	function adoptionReplay() {
+		var jsonData = {
+			"serverCode" : "adoptionReplay",
+			"problemId" : "",
+			"replayId" : ""
+		}
+		showAction(jsonData);
+	}
+	function closeProblem(){
+		var jsonData = {
+			"serverCode" : "closeProblem",
+			"problemId" : ""
+		}
+		showAction(jsonData);
+	}
 </script>
 
 <div id="test"></div>
@@ -281,8 +297,8 @@ ul>li {
 					<li class="list-group-item"><a href="javascript:problemAdd()">problemAdd 问题新增</a></li>
 					<li class="list-group-item"><a href="javascript:problemReplayAdd()">problemReplayAdd 回答问题</a></li>
 					<li class="list-group-item"><a href="javascript:problemReplayList()">problemReplayList 问题回复列表</a></li>
-					<li class="list-group-item"><a href="javascript:()"> 采纳回复</a></li>
-					<li class="list-group-item"><a href="javascript:()"> 关闭问题</a></li>
+					<li class="list-group-item"><a href="javascript:adoptionReplay()">adoptionReplay 采纳回复</a></li>
+					<li class="list-group-item"><a href="javascript:closeProblem()">closeProblem 关闭问题</a></li>
 				
 				</ul>
 

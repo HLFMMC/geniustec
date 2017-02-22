@@ -46,14 +46,20 @@ public class ProblemReplayAdd {
 				sqlClient.setAutoCommit(false);
 				LinkedList<HashMap<String, String>> data1 = problemDB.findProblemList(problemId, null);
 				if(data1.size()>0) {
-					problemDB.ProblemReplayAdd(problemId, content, user.getUserId());
-					if(!data1.get(0).get("userId").equals(user.getUserId())) {
-						problemDB.updatePushUserScore(user.getUserId(), "5");
-						LinkedList<HashMap<String, String>> data = managerDB.findUser(user.getUserId());
-						user.setIntegral(data.get(0).get("integral"));
-						session.setAttribute("user", user);
+					if(data1.get(0).get("isClose").equals("0")){
+						problemDB.ProblemReplayAdd(problemId, content, user.getUserId());
+						if(!data1.get(0).get("userId").equals(user.getUserId())) {
+							problemDB.updatePushUserScore(user.getUserId(), "5");
+							LinkedList<HashMap<String, String>> data = managerDB.findUser(user.getUserId());
+							user.setIntegral(data.get(0).get("integral"));
+							session.setAttribute("user", user);
+						}
+						sqlClient.commit();
+					} else if(data1.get(0).get("isClose").equals("1")) {
+						
+					} else {
+						
 					}
-					sqlClient.commit();
 				} else {
 					responseMessage = "error-problemId";
 				}

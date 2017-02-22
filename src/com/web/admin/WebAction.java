@@ -95,6 +95,8 @@ public class WebAction extends HttpServlet {
 			else if(   "problemAdd".equals(serverCode)){new ProblemAdd().doPost(req, resp);}
 			else if(   "problemReplayAdd".equals(serverCode)){new ProblemReplayAdd().doPost(req, resp);}
 			else if(   "problemReplayList".equals(serverCode)){new ProblemReplayList().doPost(req, resp);}
+			else if(   "adoptionReplay".equals(serverCode)){new AdoptionReplay().doPost(req, resp);}
+			else if(   "closeProblem".equals(serverCode)){new ProblemClose().doPost(req, resp);}
 			else{
 				JSONListFormat jFormat = new JSONListFormat();
 				jFormat.setServerMsg("error - no serverCode");
