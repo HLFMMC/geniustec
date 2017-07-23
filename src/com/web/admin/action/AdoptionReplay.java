@@ -12,7 +12,7 @@ import com.CheckUtil;
 import com.JSONListFormat;
 import com.db.SQLClient;
 import com.web.WebUtil;
-import com.web.admin.User;
+import com.web.admin.Manager;
 import com.web.admin.db.ProblemDB;
 /**
  * 采纳问题
@@ -29,9 +29,9 @@ public class AdoptionReplay {
 		String replayId = req.getParameter("replayId");
 		String problemId = req.getParameter("problemId");
 		HttpSession session = req.getSession();
-		User user = (User) session.getAttribute("user");
+		Manager manager = (Manager) session.getAttribute("manager");
 		
-		if(user == null) {
+		if(manager == null) {
 			responseMessage  = "error-login";
 		} else if(!CheckUtil.isInteger(problemId)) {
 			responseMessage  = "error-problemId";
@@ -49,9 +49,9 @@ public class AdoptionReplay {
 			LinkedList<HashMap<String, String>> data2 = problemDB.findProblemReplayList(problemId,replayId);
 
 			if(data.size()>0 && data2.size()>0) {
-				if(data.get(0).get("userId").equals(user.getUserId())) {
+				if(data.get(0).get("userId").equals(manager.getManagerId())) {
 					if(data.get(0).get("isClose").equals("0")) {
-						if(data2.get(0).get("userId").equals(user.getUserId())){
+						if(data2.get(0).get("userId").equals(manager.getManagerId())){
 							responseMessage = "error-oneself";
 						} else {
 							try {

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.JSONListFormat;
 import com.db.SQLClient;
 import com.web.WebUtil;
+import com.web.admin.FormatDataUtil;
 import com.web.admin.db.ProblemDB;
 
 public class ProblemList {
@@ -19,7 +20,7 @@ public class ProblemList {
 		
 		JSONListFormat  jsonFormat = WebUtil.createJSONListFormat(req, false);
 		
-		String text = req.getParameter("text");
+		String search = req.getParameter("search");
 		String problemId = req.getParameter("problemId");
 		
 		
@@ -27,10 +28,17 @@ public class ProblemList {
 		ProblemDB problemDB = new ProblemDB(sqlClient);
 		
 		if(responseMessage == "") {
-			LinkedList<HashMap<String, String>> data = problemDB.findProblemList(problemId, text);
+			LinkedList<HashMap<String, String>> data = problemDB.findProblemList(problemId, search);
 			while(data.size()>0) {
 				HashMap<String, String> map = data.remove();
-				jsonFormat.addMap(map);
+				String problemGetId = map.get("problemId");
+				LinkedList<HashMap<String, String>> picList = problemDB.findProblemPicList(problemGetId);
+				LinkedList<HashMap<String, String>> replayList = problemDB.findProblemReplayList(problemGetId);
+				
+				HashMap<String, LinkedList<HashMap<String, String>>> maps = new HashMap<>();
+				maps.put("picList", picList);
+				maps.put("replayList", replayList);
+				jsonFormat = FormatDataUtil.groupFormat(map, maps, jsonFormat);
 			}
 			
 		}

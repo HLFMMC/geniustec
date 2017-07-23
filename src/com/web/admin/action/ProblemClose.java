@@ -12,7 +12,7 @@ import com.CheckUtil;
 import com.JSONListFormat;
 import com.db.SQLClient;
 import com.web.WebUtil;
-import com.web.admin.User;
+import com.web.admin.Manager;
 import com.web.admin.db.ProblemDB;
 
 public class ProblemClose {
@@ -23,9 +23,9 @@ public class ProblemClose {
 		JSONListFormat  jsonFormat = WebUtil.createJSONListFormat(req, false);
 		
 		String problemId = req.getParameter("problemId");HttpSession session = req.getSession();
-		User user = (User) session.getAttribute("user");
+		Manager manager = (Manager) session.getAttribute("manager");
 		
-		if(user == null) {
+		if(manager == null) {
 			responseMessage  = "error-login";
 		} else if(!CheckUtil.isInteger(problemId)) {
 			responseMessage  = "error-problemId";
@@ -37,7 +37,7 @@ public class ProblemClose {
 		if(responseMessage == "") {
 			LinkedList<HashMap<String, String>> data = problemDB.findProblemList(problemId, null);
 			if(data.size()>0) {
-				if(data.get(0).get("userId").equals(user.getUserId())) {
+				if(data.get(0).get("userId").equals(manager.getManagerId())) {
 					problemDB.ProblemClose(problemId);
 				} else {
 					responseMessage  = "error-authority";

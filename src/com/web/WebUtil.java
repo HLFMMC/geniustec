@@ -1,5 +1,9 @@
 package com.web;
 
+import java.io.File;
+import java.util.regex.Matcher;
+
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -75,7 +79,18 @@ public class WebUtil {
 		
 	}
 	
-	
+	public static  File findWebPathFile(HttpServletRequest req  , String webURL){
+		
+		
+		ServletContext servletContext = req.getServletContext();
+		File realPathFile =   new File( servletContext.getRealPath(File.separator) );
+		if(webURL.startsWith("/")) webURL = webURL.substring(1, webURL.length());
+		String path = webURL.replaceAll(Matcher.quoteReplacement(File.separator), "/");
+		File urlFile = new File ( realPathFile ,path);
+		urlFile.getParentFile().mkdirs();
+		return urlFile;
+		
+	}
 	
 	
 	

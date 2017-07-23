@@ -10,8 +10,9 @@ import com.CheckUtil;
 import com.JSONListFormat;
 import com.db.SQLClient;
 import com.web.WebUtil;
-import com.web.admin.User;
-import com.web.admin.db.ArticleDB;
+import com.web.admin.Manager;
+import com.web.admin.ManagerPower;
+import com.web.admin.db.ManagerDB;
 
 public class ArticleDelete {
 	
@@ -21,20 +22,27 @@ public class ArticleDelete {
 		JSONListFormat  jsonFormat = WebUtil.createJSONListFormat(req, false);
 		
 		HttpSession session = req.getSession();
-		User user = (User) session.getAttribute("user");
+		Manager manager = (Manager) session.getAttribute("manager");
 		
 		String articleId = req.getParameter("articleId");
-		if(user == null) {
+		if(manager == null) {
 			responseMessage = "error-login";
 		} else if(CheckUtil.isEmpty(articleId)) {
-			responseMessage = "error-title";
+			responseMessage = "error-articleId";
 		} 
 		
+		if(responseMessage == "") {
+			ManagerPower managerPower = new ManagerPower("1001", manager.getManagerId());
+			if(!managerPower.isPower()) {
+				responseMessage = "error-power";
+			}
+		}
+		
 		SQLClient sqlClient = new SQLClient();
-		ArticleDB articleDB = new ArticleDB(sqlClient);
+		ManagerDB managerDB = new ManagerDB(sqlClient);
 		
 		if(responseMessage == "") {
-			articleDB.ArticleDelete(articleId, user.getUserId());
+			managerDB.removeArticle(articleId);
 		}
 		
 		if(responseMessage == "") {

@@ -15,7 +15,6 @@ import org.apache.log4j.Logger;
 import com.IPUtil;
 import com.JSONListFormat;
 import com.web.admin.action.*;
-//import com.web.admin.action.UserLogin;
 
 
 /**
@@ -77,26 +76,51 @@ public class WebAction extends HttpServlet {
 
 		
 		try{
+
+			/*用户*/
+			if(        "managerLogin".equals(serverCode)){new ManagerLogin().doPost(req, resp);}
+			else if(   "managerInfo".equals(serverCode)){new ManagerInfo().doPost(req, resp);}
+			else if(   "managerLogout".equals(serverCode)){new ManagerLogout().doPost(req, resp);}
+			else if(   "managerRegister".equals(serverCode)){new ManagerRegister().doPost(req, resp);}
+			else if(   "managerUpdatePic".equals(serverCode)){new ManagerUpdatePic().doPost(req, resp);}
+			else if(   "managerUpdateInfo".equals(serverCode)){new ManagerUpdateInfo().doPost(req, resp);}
 			
-			if(   "userLogin".equals(serverCode)){new UserLogin().doPost(req, resp);}
-			else if(   "userInfo".equals(serverCode)){new UserInfo().doPost(req, resp);}
-			else if(   "userLogout".equals(serverCode)){new UserLogout().doPost(req, resp);}
-			else if(   "userRegister".equals(serverCode)){new UserRegister().doPost(req, resp);}
+
+			else if(   "myArticleList".equals(serverCode)){new MyArticleList().doPost(req, resp);}
+			else if(   "myProblemList".equals(serverCode)){new MyProblemList().doPost(req, resp);}
+			
 			
 			//文章相关
 			else if(   "articleList".equals(serverCode)){new ArticleList().doPost(req, resp);}
 			else if(   "articleAdd".equals(serverCode)){new ArticleAdd().doPost(req, resp);}
-			else if(   "articleDelete".equals(serverCode)){new ArticleDelete().doPost(req, resp);}
 			else if(   "articleReplay".equals(serverCode)){new ArticleReplay().doPost(req, resp);}
-			else if(   "articleReplayList".equals(serverCode)){new ArticleReplayList().doPost(req, resp);}
-
+			
 			// 问题相关
 			else if(   "problemList".equals(serverCode)){new ProblemList().doPost(req, resp);}
 			else if(   "problemAdd".equals(serverCode)){new ProblemAdd().doPost(req, resp);}
-			else if(   "problemReplayAdd".equals(serverCode)){new ProblemReplayAdd().doPost(req, resp);}
-			else if(   "problemReplayList".equals(serverCode)){new ProblemReplayList().doPost(req, resp);}
+			else if(   "problemReplay".equals(serverCode)){new ProblemReplay().doPost(req, resp);}
+			
+			
+
 			else if(   "adoptionReplay".equals(serverCode)){new AdoptionReplay().doPost(req, resp);}
 			else if(   "closeProblem".equals(serverCode)){new ProblemClose().doPost(req, resp);}
+			
+			
+			//管理员
+			else if(   "articleDelete".equals(serverCode)){new ArticleDelete().doPost(req, resp);}
+			else if(   "problemDelete".equals(serverCode)){new ProblemDelete().doPost(req, resp);}
+	 		else if(   "managerList".equals(serverCode)){new ManagerList().doPost(req, resp);}
+	 		else if(   "managerList2".equals(serverCode)){new ManagerList2().doPost(req, resp);}
+			else if(   "managerDisabled".equals(serverCode)){new ManagerDisabled().doPost(req, resp);}
+			else if(   "managerToRole".equals(serverCode)){new ManagerToRole().doPost(req, resp);}
+			else if(   "roleList".equals(serverCode)){new RoleList().doPost(req, resp);}
+			else if(   "roleAdd".equals(serverCode)){new RoleAdd().doPost(req, resp);}
+			else if(   "rolePowerList".equals(serverCode)){new RolePowerList().doPost(req, resp);}
+			else if(   "roleToPower".equals(serverCode)){new RoleToPower().doPost(req, resp);}
+			
+			//分类
+			else if(   "categoryList".equals(serverCode)) {new CategoryList().doPost(req, resp);}
+			else if(   "disciplineList".equals(serverCode)) {new DisciplineList().doPost(req, resp);}
 			else{
 				JSONListFormat jFormat = new JSONListFormat();
 				jFormat.setServerMsg("error - no serverCode");

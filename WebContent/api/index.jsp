@@ -110,35 +110,74 @@ ul>li {
 	
 	
 	/* managerLogin */
-	function userLogin() {
+	function managerLogin() {
 		var jsonData = {
-			"serverCode" : "userLogin",
+			"serverCode" : "managerLogin",
 			"email" : "1191929983@qq.com",
 			"password" : "123qwe"
 		}
 		showAction(jsonData);
 	}
 	
-	function userInfo() {
+	function managerInfo() {
 		var jsonData = {
-			"serverCode" : "userInfo"
+			"serverCode" : "managerInfo"
 		}
 		showAction(jsonData);
 	}
 	// 登录者信息
-	function userLogout() {
+	function managerLogout() {
 		var jsonData = {
-			"serverCode" : "userLogout"
+			"serverCode" : "managerLogout"
 		}
 		showAction(jsonData);
 	}
 	/*用户注册*/
-	function userRegister() {
+	function managerRegister() {
 		var jsonData = {
-			"serverCode" : "userRegister",
+			"serverCode" : "managerRegister",
 			"email" : "", 
-			"nikeName" : "",
+			"userName" : "",
 			"password" : ""
+		}
+		showAction(jsonData);
+	}
+	
+	// 修改头像
+	function managerUpdatePic() {
+		var jsonData = {
+			"serverCode" : "managerUpdatePic",
+			"base64": ""
+		}
+		showAction(jsonData);
+	}
+	
+	/*修改个人信息*/
+	function managerUpdateInfo() {
+		var jsonData = {
+			"serverCode" : "managerUpdateInfo",
+			"userName": "",
+			"sex" : "",
+			"personality" : ""
+		}
+		showAction(jsonData);
+	}
+	
+	// 修改头像
+	function uploadUserImage() {
+		var jsonData = {
+			"serverCode" : "uploadUserImage",
+			"base64": ""
+		}
+		showAction(jsonData);
+	}
+	/*修改个人信息*/
+	function updateUserInfo() {
+		var jsonData = {
+			"serverCode" : "updateUserInfo",
+			"nikeName": "",
+			"sex" : "",
+			"signature" : ""
 		}
 		showAction(jsonData);
 	}
@@ -146,20 +185,36 @@ ul>li {
 	function articleList() {
 		var jsonData = {
 			"serverCode" : "articleList",
-			"text" : "", 
+			"search" : "", 
 			"articleId" : ""
 		}
 		showAction(jsonData);
 	}
-	
+
 	/*文章新增*/
 	function articleAdd() {
+		var picList = [];
+		var item = {};
+		item.base64="";
+		picList.push(item);
+		var picStr = JSON.stringify(picList);
 		var jsonData = {
 			"serverCode" : "articleAdd",
-			"source" : "1", 
 			"title" : "",
-			"count" : "",
-			"categoryId" : ""
+			"content" : "",
+			"categoryId" : "",
+			"picList" : picStr
+		}
+		showAction(jsonData);
+	}
+	
+	//文章回复
+	function articleReplay() {
+		var jsonData = {
+			"serverCode" : "articleReplay",
+			"articleId" : "",
+			"content" : "",
+			"base64" : ""
 		}
 		showAction(jsonData);
 	}
@@ -172,15 +227,7 @@ ul>li {
 		}
 		showAction(jsonData);
 	}
-	//文章回复
-	function articleReplay() {
-		var jsonData = {
-			"serverCode" : "articleReplay",
-			"articleId" : "",
-			"content" : ""
-		}
-		showAction(jsonData);
-	}
+
 	//文章回复列表
 	function articleReplayList(){
 		var jsonData = {
@@ -191,12 +238,26 @@ ul>li {
 		showAction(jsonData);
 	}
 	
+	//我的回复列表
+	function myArticleReplayList(){
+		var jsonData = {
+			"serverCode" : "myArticleReplayList"
+		}
+		showAction(jsonData);
+	}
+	
 	//问题列表
 	function problemList(){
 		var jsonData = {
 			"serverCode" : "problemList",
 			"text" : "",
 			"problemId" : ""
+		}
+		showAction(jsonData);
+	}//问题列表
+	function myProblemList(){
+		var jsonData = {
+			"serverCode" : "myProblemList"
 		}
 		showAction(jsonData);
 	}
@@ -228,6 +289,12 @@ ul>li {
 		}
 		showAction(jsonData);
 	}
+	function myProblemReplayList(){
+		var jsonData = {
+			"serverCode" : "myProblemReplayList"
+		}
+		showAction(jsonData);
+	}
 	/*采纳问题*/
 	function adoptionReplay() {
 		var jsonData = {
@@ -241,6 +308,27 @@ ul>li {
 		var jsonData = {
 			"serverCode" : "closeProblem",
 			"problemId" : ""
+		}
+		showAction(jsonData);
+	}
+	function disciplineList(){
+		var jsonData = {
+			"serverCode" : "disciplineList"
+		}
+		showAction(jsonData);
+	}
+	function categoryList(){
+		var jsonData = {
+			"serverCode" : "categoryList",
+			"disciplineId" : ""
+		}
+		showAction(jsonData);
+	}
+	
+	/*我的文章列表*/
+	function myArticleList() {
+		var jsonData = {
+			"serverCode" : "myArticleList"
 		}
 		showAction(jsonData);
 	}
@@ -276,32 +364,45 @@ ul>li {
 			
 				<div class="panel-heading">manager</div>
 				<ul class="list-group">
-					<li class="list-group-item"><a href="javascript:userLogin()">userLogin 登录</a></li>
-					<li class="list-group-item"><a href="javascript:userInfo()">userInfo 用户信息 </a></li>
-					<li class="list-group-item"><a href="javascript:userLogout()">userLogout 登出 </a></li>
-					<li class="list-group-item"><a href="javascript:userRegister()">userRegister 注册 </a></li>
+					<li class="list-group-item"><a href="javascript:managerLogin()">managerLogin 登录</a></li>
+					<li class="list-group-item"><a href="javascript:managerInfo()">managerInfo 用户信息 </a></li>
+					<li class="list-group-item"><a href="javascript:managerLogout()">managerLogout 登出 </a></li>
+					<li class="list-group-item"><a href="javascript:managerRegister()">managerRegister 注册 </a></li>
+					<li class="list-group-item"><a href="javascript:managerUpdatePic()">managerUpdatePic 修改头像 </a></li>
+					<li class="list-group-item"><a href="javascript:managerUpdateInfo()">managerUpdateInfo 修改个人信息 </a></li>
+					
+					<li class="list-group-item"></li>
+					<li class="list-group-item"><a href="javascript:uploadUserImage()">uploadUserImage 修改头像 </a></li>
+					<li class="list-group-item"><a href="javascript:updateUserInfo()">updateUserInfo 修改个人信息 </a></li>
 
 				</ul>
 				<div class="panel-heading">文章相关</div>
 				<ul class="list-group">
 					<li class="list-group-item"><a href="javascript:articleList()">articleList 文章列表</a></li>
+					<li class="list-group-item"><a href="javascript:myArticleList()">myArticleList 我的文章列表</a></li>
 					<li class="list-group-item"><a href="javascript:articleAdd()">articleAdd 文章新增</a></li>
-					<li class="list-group-item"><a href="javascript:articleDelete()">articleDelete 文章删除</a></li>
 					<li class="list-group-item"><a href="javascript:articleReplay()">articleReplay 文章回复新增</a></li>
-					<li class="list-group-item"><a href="javascript:articleReplayList()">articleReplayList 文章回复列表</a></li>
+					<li class="list-group-item"><a href="javascript:articleDelete()">articleDelete 文章删除</a></li>
 				
 				</ul>
 				<div class="panel-heading">问题相关</div>
 				<ul class="list-group">
 					<li class="list-group-item"><a href="javascript:problemList()">problemList 问题列表</a></li>
+					<li class="list-group-item"><a href="javascript:myProblemList()">myProblemList 我的问题列表</a></li>
 					<li class="list-group-item"><a href="javascript:problemAdd()">problemAdd 问题新增</a></li>
 					<li class="list-group-item"><a href="javascript:problemReplayAdd()">problemReplayAdd 回答问题</a></li>
 					<li class="list-group-item"><a href="javascript:problemReplayList()">problemReplayList 问题回复列表</a></li>
+					<li class="list-group-item"><a href="javascript:myProblemReplayList()">myProblemReplayList 我的问题回复列表</a></li>
 					<li class="list-group-item"><a href="javascript:adoptionReplay()">adoptionReplay 采纳回复</a></li>
 					<li class="list-group-item"><a href="javascript:closeProblem()">closeProblem 关闭问题</a></li>
 				
 				</ul>
-
+				<div class="panel-heading">分类</div>
+				<ul class="list-group">
+					<li class="list-group-item"><a href="javascript:categoryList()">categoryList列表</a></li>
+					<li class="list-group-item"><a href="javascript:disciplineList()">disciplineList 问题新增</a></li>
+				
+				</ul>
 
 			</div>
 		</div>

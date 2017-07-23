@@ -7,9 +7,11 @@ import java.util.LinkedList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.CheckUtil;
 import com.JSONListFormat;
 import com.db.SQLClient;
 import com.web.WebUtil;
+import com.web.admin.FormatDataUtil;
 import com.web.admin.db.ArticleDB;
 
 public class ArticleList {
@@ -19,7 +21,7 @@ public class ArticleList {
 		
 		JSONListFormat  jsonFormat = WebUtil.createJSONListFormat(req, false);
 		
-		String text = req.getParameter("text");
+		String search = req.getParameter("search");
 		String articleId = req.getParameter("articleId");
 		
 		
@@ -27,10 +29,20 @@ public class ArticleList {
 		ArticleDB articleDB = new ArticleDB(sqlClient);
 		
 		if(responseMessage == "") {
-			LinkedList<HashMap<String, String>> data = articleDB.findArticleList(articleId, text);
+			if(CheckUtil.isInteger(articleId)) {
+				articleDB.ArticleUpdate(articleId);
+			}
+			LinkedList<HashMap<String, String>> data = articleDB.findArticleList(articleId, search);
 			while(data.size()>0) {
 				HashMap<String, String> map = data.remove();
-				jsonFormat.addMap(map);
+				String articleGetId = map.get("articleId");
+				LinkedList<HashMap<String, String>> picList = articleDB.findArticlePicList(articleGetId);
+				LinkedList<HashMap<String, String>> replayList = articleDB.findArticleReplayList(articleGetId);
+				
+				HashMap<String, LinkedList<HashMap<String, String>>> maps = new HashMap<>();
+				maps.put("picList", picList);
+				maps.put("replayList", replayList);
+				jsonFormat = FormatDataUtil.groupFormat(map, maps, jsonFormat);
 			}
 			
 		}
